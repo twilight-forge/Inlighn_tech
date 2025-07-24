@@ -894,20 +894,82 @@
             background-color: gray; /* You might want to use a theme variable here */
         }
 
-        /* Responsive Design for the form container specifically */
-        @media (max-width: 768px) {
-            .card-3d-wrap {
-                margin-top: 20px; /* Adjust margin for smaller screens */
-                height: auto; /* Allow height to adjust based on content */
-            }
-            .center-wrap {
-                padding: 20px; /* Adjust padding for smaller screens */
-                transform: translate3d(0, -50%, 0) perspective(100px); /* Adjust transform */
-            }
-            body {
-                padding: 10px; /* Less padding on smaller screens */
-            }
-        }
+        /* Responsive Design Adjustments */
+@media (max-width: 768px) {
+    .cylindrical-nav {
+        padding: 0 20px; /* Reduced padding for smaller screens */
+    }
+
+    .nav-links {
+        display: none; /* Hide navigation links on smaller screens */
+    }
+
+    .nav-logo {
+        font-size: 1.5rem; /* Adjust logo size */
+    }
+
+    .login-card {
+        padding: 20px; /* Reduced padding for login card */
+        margin-top: 0; /* Adjust margin for smaller screens */
+    }
+
+    .login-card h2 {
+        font-size: 1.5rem; /* Adjust heading size */
+    }
+
+    .input-group i {
+        left: 10px; /* Adjust icon position */
+        font-size: 1rem; /* Adjust icon size */
+    }
+
+    input[type="email"], input[type="password"] {
+        padding-left: 40px; /* Adjust padding for input fields */
+    }
+
+    .form-options {
+        flex-direction: column; /* Stack options vertically */
+        align-items: flex-start; /* Align items to the start */
+        gap: 10px; /* Add gap between options */
+    }
+
+    .btn {
+        padding: 12px 20px; /* Adjust button padding */
+        font-size: 1rem; /* Adjust button font size */
+    }
+
+    .card-3d-wrap {
+        width: 100%; /* Make card responsive */
+        height: auto; /* Allow height to adjust based on content */
+    }
+
+    .center-wrap {
+        padding: 20px; /* Adjust padding for smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 10px; /* Less padding on smaller screens */
+    }
+
+    .login-card h2 {
+        font-size: 1.3rem; /* Further adjust heading size */
+    }
+
+    .input-group i {
+        font-size: 0.9rem; /* Adjust icon size */
+    }
+
+    .btn {
+        padding: 10px 15px; /* Further adjust button padding */
+        font-size: 0.9rem; /* Further adjust button font size */
+    }
+
+    .nav-logo {
+        font-size: 1.2rem; /* Further adjust logo size */
+    }
+}
+
     </style>
 </head>
 
