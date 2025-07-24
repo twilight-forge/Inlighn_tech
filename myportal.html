@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Login • InLighn Tech</title>
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+    <script src="https://kit.fontawesome.com/a2e0fd53bd.js" crossorigin="anonymous"></script>
+
+    <style>
+        /* Custom Cursor Styling */
+        #custom-cursor, #cursor-follower {
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+        }
+        #custom-cursor {
+            width: 10px;
+            height: 10px;
+            background-color: white; /* White cursor dot */
+            border-radius: 50%;
+            transition: transform 0.1s ease;
+        }
+        #cursor-follower {
+            width: 30px;
+            height: 30px;
+            background-color: black; /* Default for light mode */
+            opacity: 0.15;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+        .dark-mode #cursor-follower {
+            background-color: white; /* White for dark mode */
+        }
+        #custom-cursor.active, #cursor-follower.active {
+            transform: scale(1.5) translate(-33%, -33%); /* Adjusted for scaling around center */
+        }
+        #custom-cursor.click {
+            transform: scale(0.8) translate(-50%, -50%);
+            background-color: gray;
+        }
+        /* Cylindrical Navigation (UNCHANGED) */
+        .cylindrical-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: var(--nav-bg);
+            border-radius: 0 0 50% 50% / 0 0 100% 100%;
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 50px;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+        .nav-logo {
+            color: white;
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Active link styling */
+        .nav-links a.active {
+            font-weight: 700;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .nav-links a.active::after {
+            width: 100%;
+            left: 0;
+            background: var(--primary-color); /* A subtle highlight color */
+        }
+
+
+        .theme-toggle {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+        @keyframes fadeInDown {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Floating Sparkles */
+        .shape {
+            position: absolute;
+            opacity: 1;
+            font-size: 1.2rem;
+            animation: floatUp 12s linear infinite;
+            pointer-events: none;
+            color: var(--primary-color);
+            filter: blur(0px); /* Add a slight blur for depth */
+        }
+        /* Increased number of stars/shapes */
+        .shape:nth-child(1) { left: 10%; top: 80%; animation-duration: 16s; }
+        .shape:nth-child(2) { left: 75%; top: 60%; animation-duration: 18s; }
+        .shape:nth-child(3) { left: 50%; top: 95%; animation-duration: 14s; }
+        .shape:nth-child(4) { left: 35%; top: 70%; animation-duration: 20s; }
+        .shape:nth-child(5) { left: 85%; top: 90%; animation-duration: 15s; }
+        .shape:nth-child(6) { left: 20%; top: 50%; animation-duration: 17s; font-size: 1.3rem;}
+        .shape:nth-child(7) { left: 65%; top: 75%; animation-duration: 19s; font-size: 1.1rem;}
+        .shape:nth-child(8) { left: 40%; top: 65%; animation-duration: 13s; font-size: 1.4rem;}
+        .shape:nth-child(9) { left: 95%; top: 85%; animation-duration: 21s; font-size: 1.0rem;}
+        .shape:nth-child(10) { left: 5%; top: 40%; animation-duration: 16s; font-size: 1.5rem;}
+        .shape:nth-child(11) { left: 30%; top: 20%; animation-duration: 22s; font-size: 0.9rem;}
+        .shape:nth-child(12) { left: 70%; top: 10%; animation-duration: 18s; font-size: 1.2rem;}
+        .shape:nth-child(13) { left: 15%; top: 0%; animation-duration: 20s; font-size: 1.0rem;}
+        .shape:nth-child(14) { left: 80%; top: 30%; animation-duration: 17s; font-size: 1.3rem;}
+        .shape:nth-child(15) { left: 55%; top: 5%; animation-duration: 15s; font-size: 1.1rem;}
+        .shape:nth-child(16) { left: 25%; top: 90%; animation-duration: 23s; font-size: 1.6rem;}
+        .shape:nth-child(17) { left: 45%; top: 30%; animation-duration: 14s; font-size: 0.8rem;}
+        .shape:nth-child(18) { left: 90%; top: 50%; animation-duration: 20s; font-size: 1.0rem;}
+        .shape:nth-child(19) { left: 5%; top: 10%; animation-duration: 19s; font-size: 1.2rem;}
+        .shape:nth-child(20) { left: 60%; top: 25%; animation-duration: 16s; font-size: 1.4rem;}
+
+
+        @keyframes floatUp {
+            from { transform: translateY(0) rotate(0deg); opacity: 0.1; }
+            to { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Container for main content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            margin-top: 15vh;
+            padding: 0px 20px ;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-grow: 1; /* Allows container to take up available space */
+        }
+
+        /* General Card Style (used for login and other sections later) */
+        .card {
+            background: var(--card-bg);
+            padding: 30px; /* Reduced padding for login card */
+            border-radius: 1.25rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            transform-style: preserve-3d; /* For parallax effect */
+            transition: transform 0.35s ease, filter 0.35s ease, box-shadow 0.35s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px) scale(1.01); /* Subtle hover for login card */
+            filter: brightness(1.03);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); /* Slightly increased shadow on hover */
+        }
+        .dark-mode .card:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Login Card Specific Styles */
+        .login-card {
+            max-width: 450px;
+            width: 100%;
+            text-align: center;
+            margin-top: -50px; /* Pull it up slightly into the header area */
+            z-index: 10; /* Ensure it's above other elements if needed */
+        }
+
+        .login-card h2 {
+            font-size: 2rem;
+            margin-bottom: 25px;
+            color: var(--form-text-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-weight: 700;
+        }
+
+        .login-card h2 .fas {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .input-group i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--placeholder-color);
+            font-size: 1.1rem;
+        }
+
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 14px 15px 14px 50px;
+            border: 1px solid var(--border-color);
+            background-color: var(--input-bg);
+            border-radius: 10px;
+            color: var(--form-text-color);
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            outline: none;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        input[type="email"]::placeholder,
+        input[type="password"]::placeholder {
+            color: var(--placeholder-color);
+        }
+
+        input[type="email"]:focus,
+        input[type="password"]:focus {
+            background-color: var(--card-bg);
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(var(--primary-color-rgb), 0.2); /* Subtle focus glow */
+        }
+        body.dark-mode input[type="email"]:focus,
+        body.dark-mode input[type="password"]:focus {
+            box-shadow: 0 0 0 3px rgba(var(--primary-color-rgb), 0.3); /* Darker focus glow for dark mode */
+        }
+
+
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            font-size: 0.9rem;
+        }
+
+        /* Custom Checkbox Styling */
+        .checkbox-container {
+            display: block;
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 0;
+            cursor: pointer;
+            font-size: 0.9rem;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            color: var(--text-color); /* Matches general text color */
+        }
+
+        .checkbox-container input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 18px;
+            width: 18px;
+            background-color: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .checkbox-container input:checked ~ .checkmark {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+        .checkbox-container input:checked ~ .checkmark:after {
+            display: block;
+        }
+        .checkbox-container .checkmark:after {
+            left: 6px;
+            top: 2px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            -webkit-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
+        }
+        .forgot-password,
+        .signup-link a {
+            color: var(--link-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        .forgot-password:hover,
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+            text-decoration: none;
+        }
+
+        .login-btn {
+            background: linear-gradient(90deg, var(--btn-login-start), var(--btn-login-end));
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            margin-top: 15px;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+            filter: brightness(1.1);
+        }
+
+        .login-btn .fas {
+            margin-left: 10px;
+            color: white;
+        }
+
+        .signup-link {
+            margin-top: 25px;
+            font-size: 1rem;
+            color: var(--text-color);
+        }
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .cylindrical-nav {
+                padding: 0 20px;
+            }
+
+            .header-content h1 {
+                font-size: 2rem;
+            }
+
+            .header-content p {
+                font-size: 1rem;
+            }
+
+            .login-card {
+                padding: 25px;
+            }
+            .login-card h2 {
+                font-size: 1.6rem;
+            }
+            .input-group i {
+                left: 10px;
+                font-size: 1rem;
+            }
+            input[type="email"], input[type="password"] {
+                padding-left: 40px;
+            }
+
+            .form-options {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            @media (max-width: 480px) {
+                .container {
+                    padding: 10px;
+                }
+                .navbar {
+                    display: none; /* Or create a mobile toggle menu */
+                 }
+                }
+        }
+              :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --text-color: #333;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --header-bg: linear-gradient(135deg, #4361ee, #3a0ca3);
+            --nav-bg: linear-gradient(135deg, #4361ee, #3a0ca3);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+
+            /* RGB values for transparent shadows */
+            --primary-color-rgb: 67, 97, 238;
+            --secondary-color-rgb: 63, 55, 201;
+             --input-bg-light: rgba(0, 0, 0, 0.05); /* Lighter input background for light mode */
+            --input-bg-dark: rgba(255, 255, 255, 0.15); /* Darker input background for dark mode */
+            --placeholder-color-light: rgba(0, 0, 0, 0.6);
+            --placeholder-color-dark: rgba(255, 255, 255, 0.6);
+            --form-text-color-light: #333;
+            --form-text-color-dark: #f0f0f0;
+            --border-color-light: rgba(0, 0, 0, 0.1);
+            --border-color-dark: rgba(255, 255, 255, 0.15);
+
+            --btn-login-start: var(--primary-color);
+            --btn-login-end: var(--secondary-color);
+            --link-color: var(--primary-color);
+        }
+
+        .dark-mode {
+            --primary-color: #7209b7;
+            --secondary-color: #560bad;
+            --text-color: #f8f9fa;
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --header-bg: linear-gradient(135deg, #7209b7, #3a0ca3);
+            --nav-bg: linear-gradient(135deg, #7209b7, #3a0ca3);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+
+            /* RGB values for transparent shadows in dark mode */
+            --primary-color-rgb: 114, 9, 183;
+            --secondary-color-rgb: 86, 11, 173;
+                        --input-bg: var(--input-bg-dark);
+            --placeholder-color: var(--placeholder-color-dark);
+            --form-text-color: var(--form-text-color-dark);
+            --border-color: var(--border-color-dark);
+            --link-color: var(--primary-color); /* Maintain primary color for links */
+        }
+
+        /* Default for light mode */
+        body:not(.dark-mode) {
+            --input-bg: var(--input-bg-light);
+            --placeholder-color: var(--placeholder-color-light);
+            --form-text-color: var(--form-text-color-light);
+            --border-color: var(--border-color-light);
+            --link-color: var(--primary-color);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: var(--transition);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            cursor: none; /* Keep if you have custom cursor JS, otherwise remove */
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Ensure it takes full viewport height */
+            padding: 20px; /* Add some padding so content isn't flush with edges */
+            overflow: hidden; /* Prevent body scroll if content is too large */
+        }
+
+        a {
+            cursor: pointer;
+            transition: all 200ms linear;
+        }
+        a:hover {
+            text-decoration: none;
+        }
+        .link {
+            color: var(--primary-color); /* Use primary color for links */
+        }
+        .link:hover {
+            color: var(--secondary-color);
+        }
+        p {
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 1.7;
+            color: var(--text-color); /* Ensure text color from theme */
+        }
+        h4 {
+            font-weight: 600;
+            color: var(--text-color); /* Ensure heading color from theme */
+        }
+        h6 span{
+            padding: 0 20px;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: var(--text-color); /* Adjust color to fit theme */
+            white-space: nowrap; /* Prevent "Log In" and "Sign Up" from wrapping */
+        }
+        .section {
+            position: relative;
+            width: 100%;
+            display: block;
+            text-align: center; /* Ensure the content within this section is centered */
+        }
+        /* .full-height is mostly handled by body flexbox for this centered layout */
+
+        [type="checkbox"]:checked,
+        [type="checkbox"]:not(:checked){
+            position: absolute;
+            left: -9999px;
+        }
+        .checkbox:checked + label,
+        .checkbox:not(:checked) + label{
+            position: relative;
+            display: block;
+            text-align: center;
+            width: 60px;
+            height: 16px;
+            border-radius: 8px;
+            padding: 0;
+            margin: 10px auto; /* Centered horizontally */
+            cursor: pointer;
+            background-color: var(--primary-color); /* Use primary color for switch track */
+        }
+        .checkbox:checked + label:before,
+        .checkbox:not(:checked) + label:before{
+            position: absolute;
+            display: flex; /* Use flex to center the icon */
+            justify-content: center;
+            align-items: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            color: var(--bg-color); /* Icon color */
+            background-color: var(--secondary-color); /* Switch thumb color */
+            font-family: 'Font Awesome 6 Pro', 'Font Awesome 6 Free'; /* Use Font Awesome font */
+            font-weight: 900; /* For solid icons */
+            font-size: 24px;
+            line-height: 36px; /* Center icon vertically */
+            text-align: center; /* Center icon horizontally */
+            z-index: 20;
+            top: -10px; /* Position thumb vertically on track */
+            left: -10px; /* Initial position for 'Log In' side */
+            transition: all 0.5s ease;
+            content: '\f062'; /* Unicode for fa-arrow-up */
+            transform: rotate(0deg); /* Default rotation for 'Log In' (pointing up) */
+        }
+        .checkbox:checked + label:before {
+            transform: translateX(44px) rotate(45deg); /* Move right and rotate 45deg for 'Sign Up' (up-right) */
+            content: '\f062'; /* Keep fa-arrow-up icon */
+        }
+
+        .card-3d-wrap {
+            position: relative;
+            width: 440px;
+            max-width: 100%;
+            height: 400px;
+            -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d;
+            perspective: 800px;
+            /* Adjusted margin-top to bring it closer to the switch */
+            margin-top: 20px; /* Reduced from 60px */
+            margin-left: auto; /* Center the box */
+            margin-right: auto; /* Center the box */
+        }
+        .card-3d-wrapper {
+            width: 100%;
+            height: 100%;
+            position:absolute;
+            top: 0;
+            left: 0;
+            -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d;
+            transition: all 600ms ease-out;
+        }
+        .card-front, .card-back {
+            width: 100%;
+            height: 100%;
+            background-color: var(--card-bg); /* Use theme card background */
+            /* The original pattern image might not fit your theme, consider removing or replacing it */
+            /* background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1462889/pat.svg'); */
+            background-position: bottom center;
+            background-repeat: no-repeat;
+            background-size: 300%;
+            position: absolute;
+            border-radius: 15px; /* Slightly increase border-radius for theme consistency */
+            left: 0;
+            top: 0;
+            -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d;
+            -webkit-backface-visibility: hidden;
+            -moz-backface-visibility: hidden;
+            -o-backface-visibility: hidden;
+            backface-visibility: hidden;
+            box-shadow: var(--shadow); /* Apply theme shadow */
+            border: 1px solid rgba(0,0,0,0.05); /* Light border */
+        }
+        .card-back {
+            transform: rotateY(180deg);
+        }
+        .checkbox:checked ~ .card-3d-wrap .card-3d-wrapper {
+            transform: rotateY(180deg);
+        }
+        .center-wrap{
+            position: absolute;
+            width: 100%;
+            padding: 0 35px;
+            top: 50%;
+            left: 0;
+            transform: translate3d(0, -50%, 35px) perspective(100px);
+            z-index: 20;
+            display: block;
+            text-align: center; /* Ensure content inside is centered */
+        }
+
+        .form-group{
+            position: relative;
+            display: block;
+            margin: 0;
+            padding: 0;
+            margin-bottom: 20px; /* Add some spacing between form groups */
+        }
+        .form-style {
+            padding: 13px 20px;
+            padding-left: 55px;
+            height: 48px;
+            width: 100%;
+            font-weight: 500;
+            border-radius: 8px; /* Match theme's input/button border-radius */
+            font-size: 14px;
+            line-height: 22px;
+            letter-spacing: 0.5px;
+            outline: none;
+            color: var(--text-color); /* Use theme text color */
+            background-color: var(--bg-color); /* Use theme background for inputs */
+            border: 1px solid rgba(0,0,0,0.1); /* Light border for inputs */
+            -webkit-transition: all 200ms linear;
+            transition: all 200ms linear;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05); /* Subtle inner shadow */
+        }
+        .form-style:focus,
+        .form-style:active {
+            border-color: var(--primary-color); /* Highlight border on focus */
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(var(--primary-color-rgb), 0.2); /* Focus ring */
+        }
+
+        .input-icon {
+            position: absolute;
+            top: 0;
+            left: 18px;
+            height: 48px;
+            font-size: 24px;
+            line-height: 48px;
+            text-align: left;
+            color: var(--primary-color); /* Use primary color for icons */
+            -webkit-transition: all 200ms linear;
+            transition: all 200ms linear;
+        }
+
+        /* Placeholder styling adjustments to fit theme */
+        .form-group input:-ms-input-placeholder,
+        .form-group input::-moz-placeholder,
+        .form-group input:-moz-placeholder,
+        .form-group input::-webkit-input-placeholder {
+            color: var(--text-color);
+            opacity: 0.7;
+            transition: all 200ms linear;
+        }
+        .form-group input:focus:-ms-input-placeholder,
+        .form-group input:focus::-moz-placeholder,
+        .form-group input:focus:-moz-placeholder,
+        .form-group input:focus::-webkit-input-placeholder {
+            opacity: 0;
+        }
+
+        .btn{
+            border-radius: 50px; /* Match theme's button border-radius */
+            height: 48px; /* Slightly taller for consistency */
+            font-size: 1.1rem; /* Match theme's button font size */
+            font-weight: 600;
+            text-transform: uppercase;
+            transition: var(--transition); /* Use theme transition */
+            padding: 0 40px; /* Slightly more padding */
+            letter-spacing: 1px;
+            display: inline-flex; /* Changed to inline-flex for centering with text-align: center on parent */
+            align-items: center;
+            justify-content: center;
+            text-align: center; /* This will center the text inside the button, but button itself needs parent text-align */
+            border: none;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); /* Use theme gradient */
+            color: white; /* Button text color */
+            box-shadow: 0 10px 30px rgba(var(--primary-color-rgb), 0.3); /* Use theme shadow */
+            cursor: pointer;
+        }
+
+        .btn:active,
+        .btn:focus{
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            color: white;
+            box-shadow: 0 15px 40px rgba(var(--secondary-color-rgb), 0.4); /* Use theme shadow */
+            transform: translateY(-2px);
+        }
+
+        .btn:hover{
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(var(--primary-color-rgb), 0.4);
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+        }
+
+        /* --- Theme specific CSS (from your previous input) --- */
+        .cylindrical-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: var(--nav-bg);
+            border-radius: 0 0 50% 50% / 0 0 100% 100%;
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0px 650px 0px 650px;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+        .cyl-nav{
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 80px;
+            background: var(--nav-bg);
+            border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0px 600px 0px 600px;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            color: #ffffff;
+        }
+        .nav-logo {
+            color: white;
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 10px 15px;
+            border-radius: 20px;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            width: 0;
+            height: 2px;
+            background: white;
+            transition: width 0.3s ease, left 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+            left: 0;
+        }
+
+        .theme-toggle {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        @keyframes fadeInDown {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Container for main content */
+        .container {
+            max-width: 1200px;
+            /* Removed as body flex handles centering for the form */
+            padding: 0 20px;
+            text-align: center; /* Ensures the whole section is centered */
+        }
+        .submit-button {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            box-shadow: 0 10px 30px rgba(67, 97, 238, 0.3);
+            border: none;
+            cursor: pointer;
+        }
+
+        .submit-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(67, 97, 238, 0.4);
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+        }
+        /* Custom Cursor Styling */
+        /* IMPORTANT: These CSS styles only define the appearance of the cursor elements.
+           To make the custom cursor move with the mouse and respond to clicks,
+           you need to add JavaScript code. */
+        #custom-cursor, #cursor-follower {
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none; /* Allows clicks to pass through */
+            z-index: 9999;
+            transform: translate(-50%, -50%); /* Centers the cursor on its position */
+        }
+
+        #custom-cursor {
+            width: 10px;
+            height: 10px;
+            background-color: white; /* You might want to use a theme variable here */
+            border-radius: 50%;
+            transition: transform 0.1s ease;
+        }
+
+        #cursor-follower {
+            width: 30px;
+            height: 30px;
+            background-color: black; /* You might want to use a theme variable here */
+            opacity: 0.15;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+
+        #custom-cursor.active, #cursor-follower.active {
+            transform: scale(1.5) translate(-50%, -50%); /* Ensure translate is kept with scale */
+        }
+
+        #custom-cursor.click {
+            transform: scale(0.8) translate(-50%, -50%); /* Ensure translate is kept with scale */
+            background-color: gray; /* You might want to use a theme variable here */
+        }
+
+        /* Responsive Design for the form container specifically */
+        @media (max-width: 768px) {
+            .card-3d-wrap {
+                margin-top: 20px; /* Adjust margin for smaller screens */
+                height: auto; /* Allow height to adjust based on content */
+            }
+            .center-wrap {
+                padding: 20px; /* Adjust padding for smaller screens */
+                transform: translate3d(0, -50%, 0) perspective(100px); /* Adjust transform */
+            }
+            body {
+                padding: 10px; /* Less padding on smaller screens */
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Custom Cursor Elements -->
+    <div id="custom-cursor"></div>
+    <div id="cursor-follower"></div>
+
+    <!-- Cylindrical Navigation -->
+    <nav class="cylindrical-nav">
+        <a href="#" class="nav-logo">InLighn Tech</a>
+        <div class="nav-actions">
+            <button class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Floating Sparkles (Increased quantity and variety) -->
+    <i class="fas fa-bolt shape"></i>
+    <i class="fas fa-star shape"></i>
+    <i class="fas fa-moon shape"></i>
+    <i class="fas fa-heart shape"></i>
+    <i class="fas fa-circle shape"></i>
+    <i class="fas fa-star shape"></i>
+    <i class="fas fa-circle shape"></i>
+    <i class="fas fa-bolt shape"></i>
+    <i class="fas fa-heart shape"></i>
+    <i class="fas fa-moon shape"></i>
+    <i class="fas fa-square shape"></i>
+    <i class="fas fa-certificate shape"></i>
+    <i class="fas fa-cloud shape"></i>
+    <i class="fas fa-fire-alt shape"></i>
+    <i class="fas fa-lightbulb shape"></i>
+    <i class="fas fa-snowflake shape"></i>
+    <i class="fas fa-atom shape"></i>
+    <i class="fas fa-terminal shape"></i>
+    <i class="fas fa-code-branch shape"></i>
+    <i class="fas fa-brain shape"></i>
+    <i class="fas fa-robot shape"></i>
+    <i class="fas fa-gem shape"></i>
+    <i class="fas fa-rocket shape"></i>
+    <i class="fas fa-wifi shape"></i>
+    <i class="fas fa-cubes shape"></i>
+    <i class="fas fa-infinity shape"></i>
+
+     <div class="section">
+        <div class="container">
+            <div class="row full-height justify-content-center">
+                <div class="col-12 text-center align-self-center py-5">
+                    <div class="section pb-5 pt-5 pt-sm-2 text-center">
+                        <h6 class="mb-0 pb-3"><span>Log In </span><span>Sign Up</span></h6>
+                        <input class="checkbox" type="checkbox" id="reg-log" name="reg-log"/>
+                        <label for="reg-log"></label>
+                        
+                        <div class="card-3d-wrap mx-auto">
+                            <div class="card-3d-wrapper">
+                                <div class="card-front">
+                                    <div class="center-wrap">
+                                        <div class="section text-center">
+                                            <h4 class="mb-4 pb-3">Log In</h4>
+                                            <div class="form-group">
+                                                <input type="email" name="logemail" class="form-style" placeholder="Your Email" id="logemail" autocomplete="off">
+                                                <i class="input-icon bx bx-at"></i>
+                                            </div>
+                                            <div class="form-group mt-2">
+                                                <input type="password" name="logpass" class="form-style" placeholder="Your Password" id="logpass" autocomplete="off">
+                                                <i class="input-icon bx bx-lock-alt"></i>
+                                            </div>
+                                            <a href="#" class="btn mt-4">submit</a>
+                                            <p class="mb-0 mt-4 text-center"><a href="#0" class="link">Forgot your password?</a></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-back">
+                                    <div class="center-wrap">
+                                        <div class="section text-center">
+                                            <h4 class="mb-4 pb-3">Sign Up</h4>
+                                            <div class="form-group">
+                                                <input type="text" name="logname" class="form-style" placeholder="Your Full Name" id="logname" autocomplete="off">
+                                                <i class="input-icon bx bx-user"></i>
+                                            </div>
+                                            <div class="form-group mt-2">
+                                                <input type="email" name="logemail" class="form-style" placeholder="Your Email" id="logemail" autocomplete="off">
+                                                <i class="input-icon bx bx-at"></i>
+                                            </div>
+                                            <div class="form-group mt-2">
+                                                <input type="password" name="logpass" class="form-style" placeholder="Your Password" id="logpass" autocomplete="off">
+                                                <i class="input-icon bx bx-lock-alt"></i>
+                                            </div>
+                                            <a href="index.html" class="btn mt-4">submit</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="custom-cursor"></div>
+    <div id="cursor-follower"></div>
+    <nav class="cyl-nav">
+            <div>© 2025 InLighn Tech. All rights reserved.</div>
+    </nav>
+
+
+</body>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const themeToggle = document.getElementById('themeToggle');
+            const icon = themeToggle.querySelector('i');
+            const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+
+            // Function to set theme
+            function setTheme(theme) {
+                if (theme === 'dark') {
+                    document.body.classList.add('dark-mode');
+                    icon.classList.replace('fa-moon', 'fa-sun');
+                } else {
+                    document.body.classList.remove('dark-mode');
+                    icon.classList.replace('fa-sun', 'fa-moon');
+                }
+                localStorage.setItem('theme', theme);
+            }
+
+            // Initialize theme based on localStorage or system preference
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                setTheme(savedTheme);
+            } else if (prefersDarkScheme.matches) {
+                setTheme('dark');
+            } else {
+                setTheme('light'); // Default to light if no preference
+            }
+
+            // Theme toggle click event
+            themeToggle.addEventListener('click', function () {
+                const currentTheme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+                setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+            });
+
+            // Listen for system theme changes
+            prefersDarkScheme.addEventListener('change', e => {
+                // Only change if no specific theme is set by user (i.e., localStorage is empty)
+                if (!localStorage.getItem('theme')) {
+                    setTheme(e.matches ? 'dark' : 'light');
+                }
+            });
+
+            // Custom Cursor Logic
+            const cursor = document.getElementById('custom-cursor');
+            const cursorFollower = document.getElementById('cursor-follower');
+            // Include all interactive elements for cursor effect
+            const interactiveElements = document.querySelectorAll('a, button, input[type="email"], input[type="password"], input[type="checkbox"], textarea, .card');
+
+            document.addEventListener('mousemove', e => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+                setTimeout(() => {
+                    cursorFollower.style.left = e.clientX + 'px';
+                    cursorFollower.style.top = e.clientY + 'px';
+                }, 100);
+            });
+
+            interactiveElements.forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    cursor.classList.add('active');
+                    cursorFollower.classList.add('active');
+                });
+
+                el.addEventListener('mouseleave', () => {
+                    cursor.classList.remove('active');
+                    cursorFollower.classList.remove('active');
+                });
+            });
+
+            document.addEventListener('mousedown', () => {
+                cursor.classList.add('click');
+            });
+
+            document.addEventListener('mouseup', () => {
+                cursor.classList.remove('click');
+            });
+
+            // Parallax Animation Logic for cards
+            document.addEventListener('mousemove', (e) => {
+                const cards = document.querySelectorAll('.card'); // Select all elements with class 'card'
+                const mainContainer = document.querySelector('.main-content'); // Reference for parallax center
+
+                if (!mainContainer) return; // Exit if main container not found
+
+                const containerRect = mainContainer.getBoundingClientRect();
+                const centerX = containerRect.left + containerRect.width / 2;
+                const centerY = containerRect.top + containerRect.height / 2;
+
+                const mouseX = e.clientX - centerX;
+                const mouseY = e.clientY - centerY;
+
+                cards.forEach(card => {
+                    // Check if the card has the data-parallax-speed attribute
+                    const speedAttribute = card.getAttribute('data-parallax-speed');
+                    const speed = speedAttribute ? parseFloat(speedAttribute) : 0; // Default to 0 if attribute not found or invalid
+
+                    if (speed === 0) return; // Skip if no parallax speed defined for this card
+
+                    const offsetX = -mouseX * 0.015 * speed; // Adjust multiplier for intensity
+                    const offsetY = -mouseY * 0.015 * speed;
+
+                    // Apply a slight rotation for a more 3D effect
+                    const rotateX = offsetY * 0.03; // Adjust for desired rotation
+                    const rotateY = -offsetX * 0.03;
+
+                    card.style.transform = `translate3d(${offsetX}px, ${offsetY}px, 0) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+                });
+            });
+
+            // Basic Login Form Validation
+            const loginForm = document.getElementById('loginForm');
+            if (loginForm) {
+                loginForm.addEventListener('submit', function(event) {
+                    event.preventDefault(); // Prevent default form submission
+
+                    const emailInput = document.getElementById('loginEmail');
+                    const passwordInput = document.getElementById('loginPassword');
+
+                    if (!emailInput.value.trim()) {
+                        alert('Please enter your email address.');
+                        emailInput.focus();
+                        return;
+                    }
+
+                    if (!passwordInput.value.trim()) {
+                        alert('Please enter your password.');
+                        passwordInput.focus();
+                        return;
+                    }
+
+                    // If both fields are filled, you can proceed with AJAX submission or actual login logic
+                    alert('Login form submitted! (This is a dummy alert, replace with actual login logic)');
+                    console.log('Email:', emailInput.value);
+                    console.log('Password:', passwordInput.value);
+
+                    // For demonstration, reset form or redirect after successful "login"
+                    // loginForm.reset();
+                    // window.location.href = 'dashboard.html'; // Example redirect
+                });
+            }
+        });
+  document.addEventListener('DOMContentLoaded', function () {
+    const submitBtn = document.querySelector('.card-front .btn');
+
+    submitBtn.addEventListener('click', function (e) {
+      e.preventDefault(); // Prevent default link behavior
+      const email = document.getElementById('logemail').value.trim();
+      const password = document.getElementById('logpass').value.trim();
+
+      if (!email || !password) {
+        alert("Please Sign up to login.");
+      } else {
+        // You can modify this condition to actually check login status if needed
+        alert("Account not found. Please sign up first.");
+        // Optionally, redirect to signup page
+        // window.location.href = "signup.html";
+      }
+    });
+  });
+
+    </script>
+
+</html>

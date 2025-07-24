@@ -1,0 +1,54 @@
+
+        /* ------------------- 11. ENHANCED FOOTER ------------------- */
+           footer{background-color:var(--bg);color:var(--text);padding:40px 20px;text-align:center;font-size:0.9em;box-shadow:0 -2px 8px rgba(0,0,0,0.05);margin-top:auto;border-top:1px solid var(--border);position:relative;}
+        footer::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:var(--gradient-1);animation:footerProgressBar 3s ease-out;}
+        .footer-content{display:flex;flex-wrap:wrap;justify-content:space-between;max-width:1200px;margin:auto;padding:0 20px 40px 20px;gap:30px;text-align:left;}
+        .footer-section{flex:1 1 250px;animation:footerSectionSlide 1s ease-out;}
+        .footer-section:nth-child(1){animation-delay:0.1s;}
+        .footer-section:nth-child(2){animation-delay:0.2s;}
+        .footer-section:nth-child(3){animation-delay:0.3s;}
+        .footer-section h2,.footer-section h3{color:var(--primary);margin-bottom:15px;position:relative;}
+        .footer-section h2::after,.footer-section h3::after{content:"";position:absolute;bottom:-4px;left:0;width:0;height:2px;background:var(--gradient-1);transition:width 0.6s ease;}
+        .footer-section:hover h2::after,.footer-section:hover h3::after{width:50%;}
+        .footer-section ul{list-style:none;padding:0;line-height:2;}
+        .footer-section a{text-decoration:none;color:var(--text);transition:all 0.3s ease;position:relative;}
+        .footer-section a::before{content:"";position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--primary);transition:width 0.3s ease;}
+        .footer-section a:hover{color:var(--primary);transform:translateX(5px);}
+        .footer-section a:hover::before{width:100%;}
+        .footer-section p{color:var(--text);opacity:0.9;line-height:1.6;}
+        .footer-section .social-links a{color:var(--text);width:35px;height:35px;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:rgba(67,97,238,0.1);margin-right:10px;}
+        .footer-section .social-links a:hover{color:var(--primary);background:rgba(67,97,238,0.2);transform:translateY(-2px) rotate(5deg);}
+        .footer-bottom{text-align:center;margin-top:30px;padding-top:20px;border-top:1px solid var(--border);font-size:0.9rem;color:var(--text);opacity:0.8;animation:footerBottomFade 2s ease-out;}
+
+         @keyframes footerProgressBar{0%{width:0;}100%{width:100%;}}
+        @keyframes footerSectionSlide{0%{opacity:0;transform:translateY(20px);}100%{opacity:1;transform:translateY(0);}}
+        @keyframes footerBottomFade{0%{opacity:0;}100%{opacity:0.8;}}
+
+        /* ------------------- ORIGINAL THEME TOKENS ------------------- */
+        :root {
+            --primary:#4361ee;
+            --secondary:#3f37c9;
+            --accent:#7209b7;
+            --text:#333;
+            --bg:#f8f9fa;
+            --card:#fff;
+            --shadow-s:0 4px 8px rgba(0,0,0,.06);
+            --shadow-m:0 10px 20px rgba(0,0,0,.12);
+            --shadow-l:0 18px 38px rgba(0,0,0,.18);
+            --border:#e0e0e0;
+            --cursor:#fff;
+            --primary-color-rgb-val: 67, 97, 238;
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+        .dark-mode{
+            --primary:#7209b7; --secondary:#560bad; --text:#f8f9fa; --bg:#121212;
+            --card:#1e1e1e; --border:#333; --cursor:#ececec;
+            --primary-color-rgb-val: 114, 9, 183;
+        }
+
+        /* ------------------- 2. GLOBAL RESET ------------------- */
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;transition:all .3s ease;cursor:none !important;}
+        html{scroll-behavior:smooth;}
+        body{min-height:100vh;color:var(--text);background:var(--bg);display:flex;flex-direction:column;padding-top:80px;overflow-x:hidden;}

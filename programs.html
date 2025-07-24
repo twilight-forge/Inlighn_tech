@@ -1,0 +1,1907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Programs - InLighn Tech</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Add/Update these styles in your <style> block or style.css */
+
+/* --- Existing CSS from your provided snippet (copy everything you had) --- */
+:root {
+  --primary-color: #4361ee;
+  --secondary-color: #3f37c9;
+  --text-color: #333;
+  --bg-color: #f8f9fa;
+  --card-bg: #ffffff;
+  --header-bg: linear-gradient(135deg, #4361ee, #3a0ca3);
+  --nav-bg: linear-gradient(135deg, #4361ee, #3a0ca3);
+  --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --transition: all 0.3s ease;
+}
+
+.dark-mode {
+  --primary-color: #7209b7;
+  --secondary-color: #560bad;
+  --text-color: #f8f9fa;
+  --bg-color: #121212;
+  --card-bg: #1e1e1e;
+  --header-bg: linear-gradient(135deg, #7209b7, #3a0ca3);
+  --nav-bg: linear-gradient(135deg, #7209b7, #3a0ca3);
+  --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  transition: var(--transition);
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  line-height: 1.6;
+  cursor: none;
+  display: flex; /* Added for sticky footer layout */
+  flex-direction: column; /* Added for sticky footer layout */
+  min-height: 100vh; /* Added for sticky footer layout */
+}
+
+.cylindrical-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background: var(--nav-bg);
+  border-radius: 0 0 50% 50% / 0 0 100% 100%;
+  box-shadow: var(--shadow);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 50px;
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+}
+
+.nav-logo {
+  color: white;
+  font-size: 1.8rem;
+  font-weight: bold;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+}
+
+.nav-links li {
+  margin-left: 30px;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 10px 15px;
+  border-radius: 20px;
+  position: relative;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  background: white;
+  transition: width 0.3s ease, left 0.3s ease;
+}
+
+.nav-links a:hover::after,
+.nav-links a.active::after { /* Added active state */
+  width: 100%;
+  left: 0;
+}
+
+/* Added for your nav-actions div */
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Space between toggle and other possible actions */
+}
+
+.theme-toggle {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 1.2rem;
+  z-index: 1001; /* Ensure it's above nav */
+}
+
+.main-content {
+  margin-top: 100px; /* Adjust based on your nav height */
+  flex-grow: 1; /* Make main content fill available space */
+}
+
+.cylindrical-header {
+  position: relative;
+  height: 300px;
+  background: var(--header-bg);
+  border-radius: 0 0 50% 50% / 0 0 30% 30%;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 60px;
+  margin-bottom: 80px;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.header-content {
+  text-align: center;
+  color: white;
+  z-index: 2;
+}
+
+.header-content h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  animation: fadeInDown 1s ease forwards;
+}
+
+.header-content p {
+  font-size: 1.2rem;
+  max-width: 600px;
+  margin: 0 auto;
+  animation: fadeInUp 1.2s ease forwards;
+}
+
+@keyframes fadeInDown {
+  from { transform: translateY(-20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Container for main content */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  position: relative; /* For blur effect */
+}
+
+/* Features Section Styles - keep as is if this page uses them, otherwise remove */
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  margin: 60px 0;
+  padding: 40px 0;
+}
+
+.feature-card {
+  background: var(--card-bg);
+  padding: 40px 30px;
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  text-align: center;
+  transition: var(--transition);
+  border: 1px solid rgba(67, 97, 238, 0.1);
+}
+
+.feature-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  border-color: var(--primary-color);
+}
+
+.feature-card i {
+  font-size: 3rem;
+  color: var(--primary-color);
+  margin-bottom: 20px;
+  display: block;
+}
+
+.feature-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: var(--text-color);
+  font-weight: 600;
+}
+
+.feature-card p {
+  color: var(--text-color);
+  opacity: 0.8;
+  line-height: 1.6;
+}
+
+/* CTA Section Styles */
+.cta-section {
+  text-align: center;
+  padding: 80px 40px;
+  background: linear-gradient(135deg, rgba(67, 97, 238, 0.05), rgba(114, 9, 183, 0.05));
+  border-radius: 30px;
+  margin: 60px 0;
+  border: 1px solid rgba(67, 97, 238, 0.1);
+}
+
+.cta-section h2 {
+  font-size: 2.2rem;
+  margin-bottom: 30px;
+  color: var(--text-color);
+  font-weight: 600;
+  line-height: 1.4;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.submit-button {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: white;
+  padding: 15px 40px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: var(--transition);
+  box-shadow: 0 10px 30px rgba(67, 97, 238, 0.3);
+  border: none;
+  cursor: pointer;
+}
+
+.submit-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 40px rgba(67, 97, 238, 0.4);
+  background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+}
+
+/* Contact Section Responsive */
+.contact-section {
+  background: linear-gradient(135deg, #4361ee, #7209b7);
+  color: white;
+  padding: 60px 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 40px;
+}
+
+.contact-info {
+  flex: 1;
+  min-width: 280px;
+  margin-bottom: 30px;
+}
+
+.contact-info h2 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.contact-info p {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.contact-info i {
+  margin-right: 10px;
+  width: 20px;
+}
+
+.contact-form {
+  flex: 1;
+  min-width: 280px;
+}
+
+.contact-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 30px;
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+}
+
+.form-row {
+  display: flex;
+  gap: 10px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #333;
+}
+
+.contact-form button {
+  padding: 15px;
+  border: none;
+  border-radius: 50px;
+  background: white;
+  color: #4361ee;
+  font-weight: bold;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.contact-form button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Footer Styles */
+footer {
+  background: var(--card-bg);
+  box-shadow: 0 -4px 6px var(--shadow);
+  border-top: 2px solid var(--primary-color);
+  border-radius: 20px 20px 0 0;
+  margin-top: 60px;
+}
+
+.footer-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: auto;
+  padding: 40px 20px;
+  gap: 30px;
+}
+
+.footer-section {
+  flex: 1 1 250px;
+}
+
+.footer-section h2,
+.footer-section h3 {
+  color: var(--primary-color);
+  margin-bottom: 15px;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+  line-height: 2;
+}
+
+.footer-section a {
+  text-decoration: none;
+  color: var(--text-color);
+  transition: var(--transition);
+}
+
+.footer-section a:hover {
+  color: var(--primary-color);
+}
+
+.social-links {
+  margin-top: 20px;
+  display: flex;
+  gap: 15px;
+}
+
+.social-links a {
+  font-size: 1.4rem;
+  color: var(--text-color);
+  transition: var(--transition);
+}
+
+.social-links a:hover {
+  color: var(--primary-color);
+  transform: translateY(-2px);
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(67, 97, 238, 0.1);
+  font-size: 0.9rem;
+  color: var(--text-color);
+}
+
+/* Custom Cursor Styling */
+#custom-cursor, #cursor-follower {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+}
+
+#custom-cursor {
+  width: 10px;
+  height: 10px;
+  background-color: white;
+  border-radius: 50%;
+  transition: transform 0.1s ease;
+}
+
+#cursor-follower {
+  width: 30px;
+  height: 30px;
+  background-color: black;
+  opacity: 0.15;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+}
+
+#custom-cursor.active, #cursor-follower.active {
+  transform: scale(1.5);
+}
+
+#custom-cursor.click {
+  transform: scale(0.8);
+  background-color: gray;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none; /* Assuming you'll implement a mobile menu toggle if needed */
+  }
+
+  .cylindrical-nav {
+    padding: 0 20px;
+  }
+
+  .header-content h1 {
+    font-size: 2rem;
+  }
+
+  .features, .programs-grid { /* Apply to both if they're structured similarly */
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .cta-section {
+    padding: 40px 20px;
+  }
+
+  .cta-section h2 {
+    font-size: 1.8rem;
+  }
+
+  .contact-section {
+    flex-direction: column;
+  }
+
+  .form-row {
+    flex-direction: column;
+  }
+
+  .footer-content {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+/* --- NEW / MODIFIED STYLES FOR PROGRAMS PAGE --- */
+
+.programs-section {
+    padding: 40px 0;
+    margin: 60px 0; /* Ensures spacing like your .features section */
+}
+
+.programs-section h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+.programs-section p.intro-text {
+    text-align: center;
+    font-size: 1.1rem;
+    max-width: 800px;
+    margin: 0 auto 50px auto;
+    color: var(--text-color);
+    opacity: 0.9;
+}
+
+.programs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    /* transition: filter 0.3s ease; /* Apply to container for global blur */ */
+}
+
+/* Blur effect on other cards */
+.programs-grid.blur-active > *:not(.active-card) {
+    filter: blur(8px) brightness(0.7); /* Stronger blur and dim */
+    transform: scale(0.95); /* Slightly shrink non-active cards */
+    pointer-events: none; /* Disable interaction on blurred cards */
+    transition: all 0.3s ease; /* Ensure transition for blur/scale */
+}
+/* Ensure the intro text also blurs if it's a direct sibling of the grid, or move it inside the grid for this effect */
+.programs-section.blur-active .intro-text {
+    filter: blur(8px) brightness(0.7);
+    transition: all 0.3s ease;
+}
+
+/* Program Card Styles */
+.program-card {
+    background: var(--card-bg);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    text-align: center;
+    transition: var(--transition); /* Apply transition for all properties */
+    border: 1px solid rgba(67, 97, 238, 0.1);
+    position: relative; /* For z-index to work */
+    overflow: hidden; /* For image border-radius */
+}
+
+.program-card:hover {
+    border-color: var(--primary-color);
+}
+
+.program-card img {
+    max-width: 100%;
+    height: 180px; /* Fixed height for consistency */
+    object-fit: cover; /* Cover the area, cropping if necessary */
+    border-radius: 10px; /* Rounded corners for image */
+    margin-bottom: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+.program-card h3 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.program-card p {
+    font-size: 1.05rem;
+    opacity: 0.9;
+    margin-bottom: 15px;
+}
+
+.program-card .details {
+    font-size: 0.95rem;
+    opacity: 0.7;
+    margin-top: -10px;
+    margin-bottom: 20px;
+}
+
+.program-card .button {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    padding: 12px 30px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: var(--transition);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    border: none;
+    cursor: pointer;
+}
+
+.program-card .button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+}
+
+/* Active Card (Hovered) Styles */
+.program-card.active-card {
+    transform: scale(1.08) translateY(-15px); /* Stronger zoom and lift */
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25); /* More pronounced shadow */
+    z-index: 50; /* Bring active card much more to front */
+    border-color: var(--primary-color); /* Highlight border */
+}
+.program-card.active-card img {
+    filter: brightness(1.05); /* Slightly brighten image */
+    transform: scale(1.02); /* Slight zoom on image too */
+}
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --text-color: #333;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --header-bg: linear-gradient(135deg, #4361ee, #3a0ca3);
+            --nav-bg: linear-gradient(135deg, #4361ee, #3a0ca3);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        .dark-mode {
+            --primary-color: #7209b7;
+            --secondary-color: #560bad;
+            --text-color: #f8f9fa;
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --header-bg: linear-gradient(135deg, #7209b7, #3a0ca3);
+            --nav-bg: linear-gradient(135deg, #7209b7, #3a0ca3);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: var(--transition);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            cursor: none;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .cylindrical-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: var(--nav-bg);
+            border-radius: 0 0 50% 50% / 0 0 100% 100%;
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 50px;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-logo {
+            color: white;
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 10px 15px;
+            border-radius: 20px;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            width: 0;
+            height: 2px;
+            background: white;
+            transition: width 0.3s ease, left 0.3s ease;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+            left: 0;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .theme-toggle {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 1.2rem;
+            z-index: 1001;
+        }
+
+        .main-content {
+            margin-top: 100px;
+            flex-grow: 1;
+        }
+
+        .cylindrical-header {
+            position: relative;
+            height: 300px;
+            background: var(--header-bg);
+            border-radius: 0 0 50% 50% / 0 0 30% 30%;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding-top: 60px;
+            margin-bottom: 80px;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .header-content {
+            text-align: center;
+            color: white;
+            z-index: 2;
+        }
+
+        .header-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: fadeInDown 1s ease forwards;
+        }
+
+        .header-content p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+            animation: fadeInUp 1.2s ease forwards;
+        }
+
+        @keyframes fadeInDown {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+            padding: 40px 0;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: var(--transition);
+            border: 1px solid rgba(67, 97, 238, 0.1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            border-color: var(--primary-color);
+        }
+
+        .feature-card i {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--text-color);
+            font-weight: 600;
+        }
+
+        .feature-card p {
+            color: var(--text-color);
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+
+        .cta-section {
+            text-align: center;
+            padding: 80px 40px;
+            background: linear-gradient(135deg, rgba(67, 97, 238, 0.05), rgba(114, 9, 183, 0.05));
+            border-radius: 30px;
+            margin: 60px 0;
+            border: 1px solid rgba(67, 97, 238, 0.1);
+        }
+
+        .cta-section h2 {
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            color: var(--text-color);
+            font-weight: 600;
+            line-height: 1.4;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .submit-button {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            box-shadow: 0 10px 30px rgba(67, 97, 238, 0.3);
+            border: none;
+            cursor: pointer;
+        }
+
+        .submit-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(67, 97, 238, 0.4);
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+        }
+
+        .contact-section {
+            background: linear-gradient(135deg, #4361ee, #7209b7);
+            color: white;
+            padding: 60px 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 40px;
+        }
+
+        .contact-info {
+            flex: 1;
+            min-width: 280px;
+            margin-bottom: 30px;
+        }
+
+        .contact-info h2 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .contact-info p {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .contact-info i {
+            margin-right: 10px;
+            width: 20px;
+        }
+
+        .contact-form {
+            flex: 1;
+            min-width: 280px;
+        }
+
+        .contact-form form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+        }
+
+        .form-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+        }
+
+        .contact-form button {
+            padding: 15px;
+            border: none;
+            border-radius: 50px;
+            background: white;
+            color: #4361ee;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .contact-form button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        .social-links {
+            margin-top: 20px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-links a {
+            font-size: 1.4rem;
+            color: var(--text-color);
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(67, 97, 238, 0.1);
+            font-size: 0.9rem;
+            color: var(--text-color);
+        }
+
+        #custom-cursor, #cursor-follower {
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+        }
+
+        #custom-cursor {
+            width: 10px;
+            height: 10px;
+            background-color: white;
+            border-radius: 50%;
+            transition: transform 0.1s ease;
+        }
+
+        #cursor-follower {
+            width: 30px;
+            height: 30px;
+            background-color: black;
+            opacity: 0.15;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+
+        #custom-cursor.active, #cursor-follower.active {
+            transform: scale(1.5);
+        }
+
+        #custom-cursor.click {
+            transform: scale(0.8);
+            background-color: gray;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .cylindrical-nav {
+                padding: 0 20px;
+            }
+
+            .header-content h1 {
+                font-size: 2rem;
+            }
+
+            .features, .programs-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .cta-section {
+                padding: 40px 20px;
+            }
+
+            .cta-section h2 {
+                font-size: 1.8rem;
+            }
+
+            .contact-section {
+                flex-direction: column;
+            }
+
+            .form-row {
+                flex-direction: column;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        .programs-section {
+            padding: 40px 0;
+            margin: 60px 0;
+        }
+
+        .programs-section h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        .programs-section p.intro-text {
+            text-align: center;
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto 50px auto;
+            color: var(--text-color);
+            opacity: 0.9;
+        }
+
+        .programs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .programs-grid.blur-active > *:not(.active-card) {
+            filter: blur(8px) brightness(0.7);
+            transform: scale(0.95);
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+        .programs-section.blur-active .intro-text {
+            filter: blur(8px) brightness(0.7);
+            transition: all 0.3s ease;
+        }
+
+        .program-card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: var(--transition);
+            border: 1px solid rgba(67, 97, 238, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .program-card:hover {
+            border-color: var(--primary-color);
+        }
+
+        .program-card img {
+            max-width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: filter 0.3s ease, transform 0.3s ease;
+        }
+
+        .program-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .program-card p {
+            font-size: 1.05rem;
+            opacity: 0.9;
+            margin-bottom: 15px;
+        }
+
+        .program-card .details {
+            font-size: 0.95rem;
+            opacity: 0.7;
+            margin-top: -10px;
+            margin-bottom: 20px;
+        }
+
+        .program-card .button {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border: none;
+            cursor: pointer;
+        }
+
+        .program-card .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+        }
+
+        .program-card.active-card {
+            transform: scale(1.08) translateY(-15px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+            z-index: 50;
+            border-color: var(--primary-color);
+        }
+        .program-card.active-card img {
+            filter: brightness(1.05);
+            transform: scale(1.02);
+        }
+        /* Custom Scrollbar (Optional) */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-color);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary-color);
+}
+
+/* Base Variables for Light Mode */
+
+
+/* --- Programs Page Specific Styles --- */
+.programs-section {
+    padding: 80px 0;
+    background-color: var(--bg-color);
+}
+
+.programs-section h2 {
+    text-align: center;
+    font-size: 3em;
+    margin-bottom: 50px;
+    color: var(--text-color);
+}
+
+.programs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+}
+
+.program-card {
+    background: var(--card-bg);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: var(--shadow-medium);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease; /* Add filter to transition */
+    border: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    position: relative; /* For z-index when active */
+}
+
+.program-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+}
+
+.program-card-content {
+    padding: 25px;
+    flex-grow: 1; /* Allows content to take available space */
+    display: flex;
+    flex-direction: column;
+}
+
+.program-card h3 {
+    font-size: 1.8em;
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: var(--text-color);
+}
+
+.program-card p {
+    font-size: 1em;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    color: var(--text-color);
+    flex-grow: 1; /* Allow paragraph to take space if multiple paragraphs */
+}
+
+.program-card .btn {
+    align-self: flex-start; /* Align button to start of content */
+    margin-top: auto; /* Push button to the bottom if content varies */
+}
+
+/* Program Card Blur Effect: When grid is active, blur non-active cards */
+.programs-grid.cards-blur-active .program-card:not(.active-card) {
+    filter: blur(5px); /* Apply the blur effect */
+    opacity: 0.7; /* Dim other cards slightly */
+}
+
+/* Active (hovered) program card */
+.program-card.active-card {
+    transform: scale(1.05); /* Zoom in effect */
+    box-shadow: var(--shadow-dark); /* Stronger shadow on hover */
+    z-index: 10; /* Bring hovered card to the front */
+    filter: none; /* Ensure the active card itself is NOT blurred */
+}
+
+
+/* Connect Page Styles */
+.connect-section {
+    padding: 80px 0;
+    background-color: var(--bg-color);
+}
+
+.connect-section h2 {
+    text-align: center;
+    font-size: 3em;
+    margin-bottom: 50px;
+    color: var(--text-color);
+}
+
+.contact-form-container {
+    max-width: 700px;
+    margin: 0 auto;
+    background: var(--card-bg);
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: var(--shadow-medium);
+    border: 1px solid var(--border-color);
+}
+
+.contact-form-container label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.contact-form-container input[type="text"],
+.contact-form-container input[type="email"],
+.contact-form-container textarea {
+    width: calc(100% - 22px); /* Account for padding and border */
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid var(--input-border);
+    border-radius: 8px;
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    font-size: 1em;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-form-container input[type="text"]:focus,
+.contact-form-container input[type="email"]:focus,
+.contact-form-container textarea:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(var(--primary-color-rgb-val), 0.2); /* Adjust based on primary color */
+    outline: none;
+}
+
+.contact-form-container textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* Example for --primary-color-rgb-val if needed for box-shadow with opacity */
+/* .dark-mode { --primary-color-rgb-val: 114, 9, 183; } */ /* For #7209b7 */
+/* :root { --primary-color-rgb-val: 67, 97, 238; } */ /* For #4361ee */
+
+
+/* Verify Credentials Page Styles */
+.verify-section {
+    padding: 80px 0;
+    background-color: var(--bg-color);
+    text-align: center;
+}
+
+.verify-section h2 {
+    font-size: 3em;
+    margin-bottom: 50px;
+    color: var(--text-color);
+}
+
+.verify-form-container {
+    max-width: 600px;
+    margin: 0 auto;
+    background: var(--card-bg);
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: var(--shadow-medium);
+    border: 1px solid var(--border-color);
+}
+
+.verify-form-container input[type="text"] {
+    width: calc(100% - 22px);
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid var(--input-border);
+    border-radius: 8px;
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    font-size: 1em;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.verify-form-container input[type="text"]:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(var(--primary-color-rgb-val), 0.2);
+    outline: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .nav-links {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        display: none; /* Hide by default on small screens */
+    }
+
+  
+    .hero-section h1 {
+        font-size: 2.5em;
+    }
+
+    .hero-section p {
+        font-size: 1em;
+    }
+
+    .features-grid, .programs-grid {
+        grid-template-columns: 1fr; /* Stack cards on small screens */
+    }
+
+    .nav-actions {
+        margin-left: auto; /* Push theme toggle to right */
+    }
+}
+    </style>
+</head>
+<body>
+    <div id="custom-cursor"></div>
+    <div id="cursor-follower"></div>
+
+    <nav class="cylindrical-nav">
+        <a href="index.html" class="nav-logo">InLighn Tech</a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="programs.html" class="active">Programs</a></li> <li><a href="verify.html">Verify Credentials</a></li>
+            <li><a href="whyinlighn.html">Why InLighn</a></li>
+            <li><a href="connect.html">Connect</a></li>
+            <li><a href="myportal.html">My Portal</a></li>
+        </ul>
+        <div class="nav-actions">
+            <button class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <div class="main-content">
+        <header class="cylindrical-header">
+            <div class="header-content">
+                <h1>Our Programs</h1> <p>Unlock your potential with our cutting-edge courses designed for the future of technology and creativity.</p>
+            </div>
+        </header>
+
+        <div class="container">
+            <section class="programs-section">
+                <h2>Explore Our Diverse Programs</h2>
+                <p class="intro-text">
+                    Each program is crafted to provide hands-on experience and expert guidance. Hover over a program to see it in detail!
+                </p>
+                <div class="programs-grid">
+                    <div class="program-card" data-parallax-speed="0.8">
+                        <img src="https://www.designveloper.com/wp-content/uploads/2021/01/Web-Development-Bootcamp-2-1.jpg" alt="Web Development Bootcamp">
+                        <h3>Web Development Bootcamp</h3>
+                        <p>Master front-end & back-end skills with real-world projects. HTML, CSS, JavaScript, React, Node.js, databases.</p>
+                        <p class="details">Duration: 12 Weeks | Mode: Online Live</p>
+                        <a href="#" class="button">Enroll Now</a>
+                    </div>
+
+                    <div class="program-card" data-parallax-speed="1">
+                        <img src="https://palin.co.in/wp-content/uploads/2021/04/Data-science-life-cycle-1000X700.jpg" alt="Data Science & ML">
+                        <h3>Data Science & ML</h3>
+                        <p>Explore data analysis, machine learning algorithms, and predictive modeling using Python and popular libraries.</p>
+                        <p class="details">Duration: 16 Weeks | Mode: Blended</p>
+                        <a href="#" class="button">Learn More</a>
+                    </div>
+
+                    <div class="program-card" data-parallax-speed="1.2">
+                        <img src="https://th.bing.com/th/id/OIP.FhFd2X5rkksMqQZZweiKFwAAAA?rs=1&pid=ImgDetMain&cb=idpwebp2&o=7&rm=3" alt="UI/UX Design">
+                        <h3>UI/UX Design Masterclass</h3>
+                        <p>Design intuitive and engaging user experiences. Covers wireframing, prototyping, user research, and tools like Figma.</p>
+                        <p class="details">Duration: 10 Weeks | Mode: Online Self-Paced</p>
+                        <a href="#" class="button">View Curriculum</a>
+                    </div>
+
+                    <div class="program-card" data-parallax-speed="1.4">
+                        <img src="https://warditsecurity.com/wp-content/uploads/2021/05/SCSS-1024x575-1.jpg" alt="Cybersecurity">
+                        <h3>Cybersecurity Fundamentals</h3>
+                        <p>Understand network security, ethical hacking, and incident response. Prepare for industry certifications and protect digital assets.</p>
+                        <p class="details">Duration: 8 Weeks | Mode: Online Live</p>
+                        <a href="#" class="button">Discover More</a>
+                    </div>
+
+                    <div class="program-card" data-parallax-speed="1.6">
+                        <img src="https://th.bing.com/th/id/OIP.eSsAdCUevbptplcKvFQqMQHaE8?rs=1&pid=ImgDetMain&cb=idpwebp2&o=7&rm=3" alt="Mobile App Development">
+                        <h3>Mobile App Development</h3>
+                        <p>Build native mobile applications for iOS and Android platforms. Covers Swift/Kotlin, cross-platform frameworks, and app deployment.</p>
+                        <p class="details">Duration: 14 Weeks | Mode: Online Live</p>
+                        <a href="#" class="button">Explore</a>
+                    </div>
+
+                    <div class="program-card" data-parallax-speed="1.8">
+                        <img src="https://th.bing.com/th/id/OIP.KLLvXqtrlVFSSS2VejLbMQHaD9?w=1029&h=551&rs=1&pid=ImgDetMain&cb=idpwebp2&o=7&rm=3" alt="Digital Marketing">
+                        <h3>Digital Marketing Strategist</h3>
+                        <p>Master SEO, SEM, social media marketing, content strategy, and analytics to drive online growth and brand visibility.</p>
+                        <p class="details">Duration: 10 Weeks | Mode: Online Self-Paced</p>
+                        <a href="#" class="button">Learn More</a>
+                    </div>
+                </div>
+            </section>
+
+            <section class="cta-section">
+                <h2>At InLighn Tech, we believe that the future of education lies in bridging the gap between academic learning and industry needs.</h2>
+                <a href="#submit" class="submit-button">Submit</a>
+            </section>
+        </div>
+    </div>
+
+    <section class="contact-section">
+        <div class="contact-info">
+            <h2>Ready to Start Your Project?</h2>
+            <p style="margin-bottom: 40px;">Let's discuss how we can bring your ideas to life</p>
+            <p><i class="fas fa-envelope"></i>hello@inlighntech.com</p>
+            <p><i class="fas fa-phone"></i>+91 9368842663</p>
+            <p><i class="fas fa-map-marker-alt"></i>VO-301, WeWork Prestige Central, Bengaluru</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+
+        <div class="contact-form">
+            <form>
+                <div class="form-row">
+                    <input type="text" placeholder="First Name">
+                    <input type="text" placeholder="Last Name">
+                </div>
+                <input type="email" placeholder="Email Address">
+                <textarea rows="4" placeholder="Tell us about your project..."></textarea>
+                <button type="submit">
+                    Send Message <i class="fas fa-arrow-right"></i>
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+                <div class="footer-content">
+            <div class="footer-section">
+                <h2>InLighn Tech</h2>
+                <p>Empowering tomorrow's tech leaders through immersive learning experiences in Cybersecurity, Full Stack Development, Data Science, AI/ML, and more. Join thousands of successful graduates who've transformed their careers with us.</p>
+                <div class="social-links">
+                    <a href="#" title="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3>Programs</h3>
+                <ul>
+                    <li><a href="#">Cybersecurity Internship</a></li>
+                    <li><a href="#">Full Stack Development</a></li>
+                    <li><a href="#">Data Science & Analytics</a></li>
+                    <li><a href="#">AI & Machine Learning</a></li>
+                    <li><a href="#">Cloud Computing</a></li>
+                    <li><a href="#">Digital Marketing</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Company</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Our Team</a></li>
+                    <li><a href="#">Careers</a></li>
+                                       <li><a href="#">Success Stories</a></li>
+                    <li><a href="#">Verify Certificate</a></li>
+                    <li><a href="#">Contact Support</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Resources</h3>
+                <ul>
+                    <li><a href="#">Blog & Tutorials</a></li>
+                    <li><a href="#">Learning Resources</a></li>
+                    <li><a href="#">Industry Reports</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 InLighn Tech. All rights reserved. Built with ❤️ and code. | Transforming careers since 2020</p>
+        </div>
+    </footer>
+
+    <script>
+      
+        document.addEventListener('DOMContentLoaded', function () {
+    // --- Theme Toggle Logic ---
+    const themeToggle = document.getElementById('themeToggle');
+    const icon = themeToggle ? themeToggle.querySelector('i') : null; // Check if themeToggle exists
+
+    // If themeToggle or its icon are missing, log a warning and exit this part of the script
+    if (!themeToggle || !icon) {
+        console.warn("Theme toggle button or icon not found. Theme functionality might be limited or absent.");
+        // We can still proceed with other JS if needed, but theme won't work.
+    } else {
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+
+        // Function to set theme
+        function setTheme(theme) {
+            if (theme === 'dark') {
+                document.body.classList.add('dark-mode');
+                icon.classList.replace('fa-moon', 'fa-sun'); // Change icon to sun
+            } else {
+                document.body.classList.remove('dark-mode');
+                icon.classList.replace('fa-sun', 'fa-moon'); // Change icon to moon
+            }
+            localStorage.setItem('theme', theme); // Save user preference
+            console.log(`Theme set to: ${theme}`); // Debugging log
+        }
+
+        // Initialize theme based on localStorage or system preference
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            setTheme(savedTheme); // Use saved theme
+        } else if (prefersDarkScheme.matches) {
+            setTheme('dark'); // Use system dark preference
+        } else {
+            setTheme('light'); // Default to light
+        }
+
+        // Theme toggle click event listener
+        themeToggle.addEventListener('click', function () {
+            const currentTheme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+            setTheme(currentTheme === 'dark' ? 'light' : 'dark'); // Toggle theme
+        });
+
+        // Listen for system theme changes (if no user preference is explicitly set)
+        prefersDarkScheme.addEventListener('change', e => {
+            if (!localStorage.getItem('theme')) { // Only apply if user hasn't manually set a preference
+                setTheme(e.matches ? 'dark' : 'light');
+            }
+        });
+    }
+
+
+    // --- Custom Cursor Logic ---
+    const customCursor = document.getElementById('custom-cursor');
+    const cursorFollower = document.getElementById('cursor-follower');
+
+    // Ensure cursor elements exist before applying logic
+    if (customCursor && cursorFollower) {
+        // Select all interactive elements for cursor hover effect
+        const interactiveElements = document.querySelectorAll('a, button, input:not([type="hidden"]), textarea, .feature-card, .program-card, .submit-button');
+
+        document.addEventListener('mousemove', e => {
+            // FIX: Changed 'cursor' to 'customCursor'
+            customCursor.style.left = e.clientX + 'px';
+            customCursor.style.top = e.clientY + 'px';
+            // Delay follower for a smoother trail effect
+            setTimeout(() => {
+                cursorFollower.style.left = e.clientX + 'px';
+                cursorFollower.style.top = e.clientY + 'px';
+            }, 100);
+        });
+
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                customCursor.classList.add('active');
+                cursorFollower.classList.add('active');
+            });
+
+            el.addEventListener('mouseleave', () => {
+                customCursor.classList.remove('active');
+                cursorFollower.classList.remove('active');
+            });
+        });
+
+        document.addEventListener('mousedown', () => {
+            customCursor.classList.add('click');
+        });
+
+        document.addEventListener('mouseup', () => {
+            customCursor.classList.remove('click');
+        });
+    } else {
+        console.warn("Custom cursor elements (custom-cursor or cursor-follower) not found in the HTML. Custom cursor will not function.");
+        // Fallback: Make default cursor visible if custom cursor isn't working (this line is okay)
+        document.body.style.cursor = 'default';
+    }
+
+
+    // --- Parallax Animation Logic for cards ---
+    const cards = document.querySelectorAll('.feature-card, .program-card');
+    const mainParallaxContainer = document.querySelector('.cylindrical-header') || document.querySelector('.container');
+
+    if (mainParallaxContainer && cards.length > 0) {
+        document.addEventListener('mousemove', (e) => {
+            const containerRect = mainParallaxContainer.getBoundingClientRect();
+            const centerX = containerRect.left + containerRect.width / 2;
+            const centerY = containerRect.top + containerRect.height / 2;
+
+            const mouseX = e.clientX - centerX;
+            const mouseY = e.clientY - centerY;
+
+            cards.forEach(card => {
+                const speedAttribute = card.getAttribute('data-parallax-speed');
+                const speed = speedAttribute ? parseFloat(speedAttribute) : 0;
+
+                if (speed === 0) {
+                    card.style.transform = ''; // Reset if no speed for the card
+                    return;
+                }
+
+                const offsetX = -mouseX * 0.01 * speed;
+                const offsetY = -mouseY * 0.01 * speed;
+
+                const rotateX = offsetY * 0.02;
+                const rotateY = -offsetX * 0.02;
+
+                card.style.transform = `translate3d(${offsetX}px, ${offsetY}px, 0) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+        });
+    } else {
+        console.info("Parallax effect not applied: mainParallaxContainer or parallax cards not found.");
+    }
+
+
+    // --- Program Card Zoom & Blur Effect ---
+    const programsSection = document.querySelector('.programs-section');
+    const programsGrid = document.querySelector('.programs-grid');
+    const programCards = document.querySelectorAll('.program-card');
+
+    if (programsGrid && programCards.length > 0) {
+        programCards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                if (programsSection) programsSection.classList.add('blur-active');
+                card.classList.add('active-card');
+            });
+
+            card.addEventListener('mouseleave', () => {
+                if (programsSection) programsSection.classList.remove('blur-active');
+                card.classList.remove('active-card');
+            });
+        });
+    } else {
+        console.info("Program card blur/zoom effect not applied: programsGrid or programCards not found.");
+    }
+});
+document.addEventListener('DOMContentLoaded', function () {
+    // --- Theme Toggle Logic ---
+    const themeToggle = document.getElementById('themeToggle');
+    // Ensure themeToggle and its icon exist before proceeding
+    const icon = themeToggle ? themeToggle.querySelector('i') : null; 
+
+    if (!themeToggle || !icon) {
+        console.warn("Theme toggle button or icon not found. Theme functionality might be limited or absent.");
+    } else {
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+
+        function setTheme(theme) {
+            if (theme === 'dark') {
+                document.body.classList.add('dark-mode');
+                icon.classList.replace('fa-moon', 'fa-sun');
+            } else {
+                document.body.classList.remove('dark-mode');
+                icon.classList.replace('fa-sun', 'fa-moon');
+            }
+            localStorage.setItem('theme', theme);
+            console.log(`Theme set to: ${theme}`); // Debugging log
+        }
+
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            setTheme(savedTheme);
+        } else if (prefersDarkScheme.matches) {
+            setTheme('dark');
+        } else {
+            setTheme('light');
+        }
+
+        themeToggle.addEventListener('click', function () {
+            const currentTheme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+            setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+        });
+
+        prefersDarkScheme.addEventListener('change', e => {
+            if (!localStorage.getItem('theme')) {
+                setTheme(e.matches ? 'dark' : 'light');
+            }
+        });
+    }
+
+
+    // --- Custom Cursor Logic ---
+    const customCursor = document.getElementById('custom-cursor');
+    const cursorFollower = document.getElementById('cursor-follower');
+
+    if (customCursor && cursorFollower) {
+        const interactiveElements = document.querySelectorAll('a, button, input:not([type="hidden"]), textarea, .feature-card, .program-card, .submit-button');
+
+        document.addEventListener('mousemove', e => {
+            // FIX: Corrected variable name from 'cursor' to 'customCursor'
+            customCursor.style.left = e.clientX + 'px';
+            customCursor.style.top = e.clientY + 'px';
+            setTimeout(() => {
+                cursorFollower.style.left = e.clientX + 'px';
+                cursorFollower.style.top = e.clientY + 'px';
+            }, 100);
+        });
+
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                customCursor.classList.add('active');
+                cursorFollower.classList.add('active');
+            });
+
+            el.addEventListener('mouseleave', () => {
+                customCursor.classList.remove('active');
+                cursorFollower.classList.remove('active');
+            });
+        });
+
+        document.addEventListener('mousedown', () => {
+            customCursor.classList.add('click');
+        });
+
+        document.addEventListener('mouseup', () => {
+            customCursor.classList.remove('click');
+        });
+    } else {
+        console.warn("Custom cursor elements (custom-cursor or cursor-follower) not found in the HTML. Custom cursor will not function.");
+        document.body.style.cursor = 'default'; // Fallback
+    }
+
+
+    // --- Parallax Animation Logic for cards ---
+    const cards = document.querySelectorAll('.feature-card, .program-card');
+    // Using a broader container for parallax calculation if cylindrical-header is not always present
+    const mainParallaxContainer = document.querySelector('.cylindrical-header') || document.querySelector('main') || document.body;
+
+    if (mainParallaxContainer && cards.length > 0) {
+        document.addEventListener('mousemove', (e) => {
+            const containerRect = mainParallaxContainer.getBoundingClientRect();
+            const centerX = containerRect.left + containerRect.width / 2;
+            const centerY = containerRect.top + containerRect.height / 2;
+
+            const mouseX = e.clientX - centerX;
+            const mouseY = e.clientY - centerY;
+
+            cards.forEach(card => {
+                const speedAttribute = card.getAttribute('data-parallax-speed');
+                const speed = speedAttribute ? parseFloat(speedAttribute) : 0;
+
+                if (speed === 0) {
+                    card.style.transform = ''; // Reset if no speed for the card
+                    return;
+                }
+
+                const offsetX = -mouseX * 0.01 * speed;
+                const offsetY = -mouseY * 0.01 * speed;
+
+                const rotateX = offsetY * 0.02;
+                const rotateY = -offsetX * 0.02;
+
+                card.style.transform = `translate3d(${offsetX}px, ${offsetY}px, 0) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+        });
+    } else {
+        console.info("Parallax effect not applied: mainParallaxContainer or parallax cards not found.");
+    }
+
+
+    // --- Program Card Zoom & Blur Effect ---
+    // Targets the grid for adding/removing the blur-enabling class
+    const programsGrid = document.querySelector('.programs-grid');
+    const programCards = document.querySelectorAll('.program-card');
+
+    if (programsGrid && programCards.length > 0) {
+        programCards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                // Add 'cards-blur-active' class to the grid when ANY card is hovered
+                programsGrid.classList.add('cards-blur-active');
+                // Add 'active-card' class to the hovered card (for zoom and to keep it clear)
+                card.classList.add('active-card');
+            });
+
+            card.addEventListener('mouseleave', () => {
+                // Remove the classes when the mouse leaves the card
+                programsGrid.classList.remove('cards-blur-active');
+                card.classList.remove('active-card');
+            });
+        });
+    } else {
+        console.info("Program card blur/zoom effect not applied: programsGrid or programCards not found.");
+    }
+});
+    </script>
+</body>
+</html>
